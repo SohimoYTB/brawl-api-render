@@ -1,16 +1,41 @@
 const express = require('express');
 const app = express();
 
-// CORS
+const express = require('express');
+const app = express();
+
+// CORS - DOIT ÊTRE AVANT TOUTES LES ROUTES
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
+    return res.status(200).end();
   }
+  
   next();
 });
+```
+
+6. **Commit changes**
+
+---
+
+### Étape 2 : Attendre le redéploiement
+
+1. Va sur **https://dashboard.render.com**
+2. Clique sur ton service **brawl-api**
+3. Tu verras **"Deploying..."** pendant 1-2 minutes
+4. Attends que ça dise **"Live"** ✅
+
+---
+
+### Étape 3 : Tester directement l'API
+
+Ouvre cette URL dans ton navigateur (remplace par ton URL) :
+```
+https://brawl-api-xxxx.onrender.com/api/player?tag=2PP
 
 // Route API
 app.get('/api/player', async (req, res) => {
