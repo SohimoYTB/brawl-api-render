@@ -1,41 +1,30 @@
 const express = require('express');
 const app = express();
 
-const express = require('express');
-const app = express();
-
-// CORS - DOIT ÊTRE AVANT TOUTES LES ROUTES
+// Configuration CORS stricte
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  const allowedOrigins = [
+    'https://brawlstarsvaleur.netlify.app',
+    'http://localhost:3000',
+    '*'
+  ];
   
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+  }
+  
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Préflight request
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
   
   next();
 });
-```
-
-6. **Commit changes**
-
----
-
-### Étape 2 : Attendre le redéploiement
-
-1. Va sur **https://dashboard.render.com**
-2. Clique sur ton service **brawl-api**
-3. Tu verras **"Deploying..."** pendant 1-2 minutes
-4. Attends que ça dise **"Live"** ✅
-
----
-
-### Étape 3 : Tester directement l'API
-
-Ouvre cette URL dans ton navigateur (remplace par ton URL) :
-```
-https://brawl-api-xxxx.onrender.com/api/player?tag=2PP
 
 // Route API
 app.get('/api/player', async (req, res) => {
@@ -45,8 +34,7 @@ app.get('/api/player', async (req, res) => {
     return res.status(400).json({ error: 'Tag manquant' });
   }
   
-  // ⚠️ REMPLACE PAR TA CLÉ API BRAWL STARS
-  const API_KEY = process.env.BRAWL_API_KEY || 'COLLE_TA_CLE_ICI_SI_PAS_DE_ENV';
+  const API_KEY = process.env.BRAWL_API_KEY || 'TA_CLE_ICI_SI_PAS_ENV';
   
   const cleanTag = tag.replace('#', '').replace(/\s/g, '').toUpperCase();
   const apiUrl = `https://api.brawlstars.com/v1/players/%23${cleanTag}`;
@@ -108,3 +96,30 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
+```
+
+**N'oublie pas de Commit !**
+
+---
+
+## 📋 CHECKLIST de vérification
+
+Avant que ça marche, assure-toi que :
+
+- [ ] Le fichier `index.js` a le code CORS **AVANT** toutes les routes
+- [ ] Tu as fait **Commit changes** sur GitHub
+- [ ] Render a **redéployé** (statut "Live")
+- [ ] L'URL directe fonctionne : `https://ton-service.onrender.com/api/player?tag=2PP`
+- [ ] La variable d'environnement `BRAWL_API_KEY` est bien configurée sur Render
+
+---
+
+## 🔍 Vérifier la variable d'environnement
+
+1. Sur **Render Dashboard**
+2. Clique sur ton service
+3. **Environment** (menu gauche)
+4. Vérifie que tu as bien :
+```
+   Key: BRAWL_API_KEY
+   Value: eyJ0eXAiOiJKV1QiLCJhbGc... (ta clé complète)
