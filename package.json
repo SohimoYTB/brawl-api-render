@@ -15,123 +15,60 @@
 }
 ```
 
-4. Clique **"Commit new file"**
-
-### 4. Créer le fichier `.gitignore` (optionnel mais propre)
-
-1. **Add file → Create new file**
-2. **Nom** : `.gitignore`
-3. **Code** :
-```
-node_modules/
-.env
-npm-debug.log
-yarn-error.log
-.DS_Store
-```
-
-4. **Commit**
+Si ce n'est pas le cas, édite-le et corrige.
 
 ---
 
-## ÉTAPE 3C : Connecter le repository à Render
-
-### 1. Retourne sur Render
+### Étape 4 : Attendre le redéploiement
 
 1. Va sur **https://dashboard.render.com**
-2. Tu devrais voir ton service "brawl-api" (en rouge probablement car échec)
-3. Clique dessus
+2. Clique sur ton service **brawl-api**
+3. Render va **automatiquement redéployer**
+4. Attends 2-3 minutes jusqu'à voir **"Live"** 🟢
 
-### 2. Reconnecter avec le bon repository
+---
 
-**Option A : Si c'est ton premier déploiement**
-1. Clique **"Settings"** (dans le menu gauche)
-2. Scroll jusqu'à **"Repository"**
-3. Clique **"Connect a different repository"**
-4. Choisis **"brawl-api-render"**
-5. Clique **"Connect"**
+### Étape 5 : Vérifier les logs
 
-**Option B : Si tu veux recommencer**
-1. En haut à droite, clique **"Delete Web Service"**
-2. Confirme la suppression
-3. Retourne au Dashboard
-4. Clique **"New +" → "Web Service"**
-5. Clique **"Connect GitHub"** (si pas déjà fait)
-6. Choisis le repository **"brawl-api-render"**
-7. Clique **"Connect"**
-
-### 3. Configuration finale
-
-Tu vas voir un formulaire. Remplis comme ça :
-```
-Name: brawl-api
-✅ (laisse Render générer automatiquement)
-
-Region: Frankfurt (EU Central) ou Oregon (US West) - choisis le plus proche
-
-Branch: main
-
-Root Directory: (laisse VIDE)
-
-Runtime: Node
-
-Build Command: yarn install
-(ou npm install)
-
-Start Command: node index.js
-```
-
-**Environment** : Laisse sur `Node`
-
-**Instance Type** : Choisis **"Free"** ⭐
-
-### 4. Ajouter la clé API (TRÈS IMPORTANT)
-
-Avant de déployer, scroll vers le bas jusqu'à **"Environment Variables"**
-
-1. Clique **"Add Environment Variable"**
-2. Remplis :
-```
-   Key: BRAWL_API_KEY
-   Value: [COLLE TA CLÉ API BRAWL STARS ICI]
-```
-3. La clé API complète (le long texte qui commence par `eyJ0...`)
-
-### 5. Lancer le déploiement
-
-1. Clique **"Create Web Service"** (gros bouton bleu)
-2. ⏳ **Attends 2-5 minutes**
-
-Tu vas voir des logs défiler :
+Clique sur **"Logs"** et tu devrais voir :
 ```
 ==> Cloning from https://github.com/...
 ==> Running build command 'yarn install'
-==> Downloading...
-==> Starting service...
+==> Installing dependencies...
+==> Building...
+==> Starting service with 'node index.js'
+🚀 Serveur démarré sur le port 10000
+✅ CORS activé pour tous les domaines
 ```
 
 ---
 
-## ÉTAPE 3D : Vérifier que ça marche
+## 📋 Résumé de ce qu'il faut dans ton repository
 
-### 1. Attendre la fin du déploiement
-
-Quand tu vois :
+Ton repository doit contenir **EXACTEMENT ces fichiers** :
 ```
-✅ Your service is live 🎉
-```
-
-### 2. Trouver ton URL
-
-En haut de la page, tu verras une URL comme :
-```
-https://brawl-api-xxxx.onrender.com
+brawl-api-render/
+├── index.js         ✅ (le code serveur)
+├── package.json     ✅ (les dépendances)
+└── README.md        ✅ (optionnel)
 ```
 
-**Copie cette URL !**
+**PAS de index.html !** ❌
 
-### 3. Tester l'API
+---
 
-Ouvre dans ton navigateur :
+## 🧪 Une fois redéployé, teste :
+
+1. **Health check :**
 ```
-https://brawl-api-xxxx.onrender.com/api/player?tag=2PP
+https://ton-service.onrender.com/health
+```
+
+2. **API avec tag :**
+```
+https://ton-service.onrender.com/api/player?tag=2PP
+```
+
+3. **Page d'accueil :**
+```
+https://ton-service.onrender.com/
