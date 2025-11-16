@@ -1,42 +1,15 @@
 {
   "name": "brawl-api-render",
   "version": "1.0.0",
-  "description": "API proxy pour Brawl Stars",
-{
-  "main": "server.js",
+  "description": "API proxy for Brawl Stars",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
-```
-
----
-
-## 📋 Configuration correcte pour Render
-
-Sur Render, dans **Settings**, tu dois avoir **EXACTEMENT** :
-```
-Build Command: npm install
-(ou yarn install)
-
-Start Command: node index.js
-(PAS node server.js)
-```
-
----
-
-## ⏱️ Une fois modifié
-
-1. **Attends 1-2 minutes** que Render redéploie
-2. Regarde les **Logs**, tu devrais voir :
-```
-==> Running 'node index.js'
-Server running
-```
-3. Statut : **Live** 🟢
-
----
-
-## 🧪 Puis teste
-```
-https://ton-service.onrender.com/health
