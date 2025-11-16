@@ -2,73 +2,41 @@
   "name": "brawl-api-render",
   "version": "1.0.0",
   "description": "API proxy pour Brawl Stars",
-  "main": "index.js",
+{
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "start": "node server.js"
   }
 }
 ```
 
-Si ce n'est pas le cas, édite-le et corrige.
-
 ---
 
-### Étape 4 : Attendre le redéploiement
+## 📋 Configuration correcte pour Render
 
-1. Va sur **https://dashboard.render.com**
-2. Clique sur ton service **brawl-api**
-3. Render va **automatiquement redéployer**
-4. Attends 2-3 minutes jusqu'à voir **"Live"** 🟢
-
----
-
-### Étape 5 : Vérifier les logs
-
-Clique sur **"Logs"** et tu devrais voir :
+Sur Render, dans **Settings**, tu dois avoir **EXACTEMENT** :
 ```
-==> Cloning from https://github.com/...
-==> Running build command 'yarn install'
-==> Installing dependencies...
-==> Building...
-==> Starting service with 'node index.js'
-🚀 Serveur démarré sur le port 10000
-✅ CORS activé pour tous les domaines
+Build Command: npm install
+(ou yarn install)
+
+Start Command: node index.js
+(PAS node server.js)
 ```
 
 ---
 
-## 📋 Résumé de ce qu'il faut dans ton repository
+## ⏱️ Une fois modifié
 
-Ton repository doit contenir **EXACTEMENT ces fichiers** :
+1. **Attends 1-2 minutes** que Render redéploie
+2. Regarde les **Logs**, tu devrais voir :
 ```
-brawl-api-render/
-├── index.js         ✅ (le code serveur)
-├── package.json     ✅ (les dépendances)
-└── README.md        ✅ (optionnel)
+==> Running 'node index.js'
+Server running
 ```
-
-**PAS de index.html !** ❌
+3. Statut : **Live** 🟢
 
 ---
 
-## 🧪 Une fois redéployé, teste :
-
-1. **Health check :**
+## 🧪 Puis teste
 ```
 https://ton-service.onrender.com/health
-```
-
-2. **API avec tag :**
-```
-https://ton-service.onrender.com/api/player?tag=2PP
-```
-
-3. **Page d'accueil :**
-```
-https://ton-service.onrender.com/
